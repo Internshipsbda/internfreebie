@@ -1,0 +1,25 @@
+/* Webfonts — Montserrat (display/headings) + Raleway (body).
+   The two families the user self-hosted (uploaded weights below) plus the
+   Google Fonts CDN for the remaining weights of each family.
+   NOTE: the Playad brand profile listed Inter Tight as the display face;
+   the uploaded Montserrat files + production codebase use Montserrat, so the
+   system standardizes on Montserrat. Say the word to switch back to Inter Tight. */
+
+/* Self-hosted uploaded weights */
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("../fonts/Montserrat-ExtraBold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("../fonts/Raleway-Light.ttf") format("truetype");
+}
+
+/* Remaining weights via CDN */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;900&family=Raleway:wght@400;500;600;700&display=swap");
