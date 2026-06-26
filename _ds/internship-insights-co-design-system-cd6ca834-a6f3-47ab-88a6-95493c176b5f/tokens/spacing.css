@@ -1,0 +1,31 @@
+/* ============================================================
+   SPACING & RADII — 4px base grid. Cards use 12–16px radius,
+   pills/badges fully round, inputs/buttons 8–12px.
+   ============================================================ */
+:root {
+  --space-0:  0;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+
+  /* Radii */
+  --radius-sm:   6px;
+  --radius-md:   8px;   /* inputs, small buttons */
+  --radius-lg:   12px;  /* buttons, small cards */
+  --radius-xl:   16px;  /* cards */
+  --radius-2xl:  20px;  /* feature cards */
+  --radius-pill: 9999px;
+
+  /* Container widths */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+}
