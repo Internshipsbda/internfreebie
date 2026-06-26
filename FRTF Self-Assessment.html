@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FRTF Competency Self-Assessment — Internship Insights Co.</title>
+<meta name="description" content="A free self-assessment for students across the 12 Future Ready Talent Framework competencies. Get a personalized Gap Report in five minutes." />
+<link rel="icon" href="assets/favicon.ico" />
+
+<link rel="stylesheet" href="_ds/internship-insights-co-design-system-cd6ca834-a6f3-47ab-88a6-95493c176b5f/tokens/fonts.css" />
+<link rel="stylesheet" href="_ds/internship-insights-co-design-system-cd6ca834-a6f3-47ab-88a6-95493c176b5f/tokens/colors.css" />
+<link rel="stylesheet" href="_ds/internship-insights-co-design-system-cd6ca834-a6f3-47ab-88a6-95493c176b5f/tokens/typography.css" />
+<link rel="stylesheet" href="_ds/internship-insights-co-design-system-cd6ca834-a6f3-47ab-88a6-95493c176b5f/tokens/spacing.css" />
+<link rel="stylesheet" href="_ds/internship-insights-co-design-system-cd6ca834-a6f3-47ab-88a6-95493c176b5f/tokens/effects.css" />
+<link rel="stylesheet" href="_ds/internship-insights-co-design-system-cd6ca834-a6f3-47ab-88a6-95493c176b5f/styles.css" />
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="_ds/internship-insights-co-design-system-cd6ca834-a6f3-47ab-88a6-95493c176b5f/_ds_bundle.js"></script>
+
+<style>
+  html, body { margin: 0; }
+  body { font-family: var(--font-body); background: var(--paper); color: var(--ink); min-height: 100vh; }
+  #app { display: flex; flex-direction: column; min-height: 100vh; }
+  a { color: var(--text-link); }
+  @media (min-width: 640px) { .hdr-eyebrow { display: inline-block !important; } }
+
+  /* Print: clean report only */
+  @media print {
+    .no-print { display: none !important; }
+    body { background: #fff; }
+    #report-root { padding-top: 12px !important; }
+  }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script src="app/assessment.jsx" type="text/babel" data-presets="react"></script>
+<script src="app/report.jsx" type="text/babel" data-presets="react"></script>
+<script type="text/babel" data-presets="react">
+const { Eyebrow } = window.InternshipInsightsCoDesignSystem_cd6ca8;
+const STORAGE_KEY = 'frtf_assessment_v1';
+
+function loadStore() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const p = JSON.parse(raw);
+      return {
+        name: p.name || '',
+        email: p.email || '',
+        ratings: p.ratings || {},
+        submitted: !!p.submitted,
+      };
+    }
+  } catch (e) {}
+  return { name: '', email: '', ratings: {}, submitted: false };
+}
+
+function Header({ eyebrow }) {
+  return (
+    <header className="no-print" style={{ borderBottom: '1px solid var(--border)', background: 'var(--white)', position: 'sticky', top: 0, zIndex: 20 }}>
+      <div style={{ maxWidth: 1024, margin: '0 auto', padding: '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
+        <a href="https://www.internshipinsightsco.com/" target="_blank" rel="noopener" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
+          <img src="assets/logo-mark.png" alt="" style={{ height: 38, width: 38 }} />
+          <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 17, letterSpacing: '-0.01em', color: 'var(--ink)' }}>Internship Insights Co.</span>
+        </a>
+        <span className="hdr-eyebrow" style={{ display: 'none', fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.18em', color: 'var(--blue-700)' }}>{eyebrow}</span>
+      </div>
+    </header>
+  );
+}
+
+function BrandFooter() {
+  return (
+    <footer className="no-print" style={{ borderTop: '1px solid var(--border)', background: 'var(--white)', marginTop: 'auto' }}>
+      <div style={{ maxWidth: 1024, margin: '0 auto', padding: '20px', display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center', justifyContent: 'space-between', fontSize: 12, color: 'var(--text-muted)' }}>
+        <span>© {new Date().getFullYear()} Internship Insights Co. — Unlocking potential through experience.</span>
+        <span>Bermuda's only internship transformation firm.</span>
+      </div>
+    </footer>
+  );
+}
+
+function App() {
+  const [store, setStore] = React.useState(loadStore);
+
+  React.useEffect(() => {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(store)); } catch (e) {}
+  }, [store]);
+
+  const setSubmitted = (v) => setStore((s) => ({ ...s, submitted: v }));
+  const restart = () => setStore({ name: store.name, email: store.email, ratings: {}, submitted: false });
+
+  return (
+    <React.Fragment>
+      <Header eyebrow={store.submitted ? 'Gap Report' : 'FRTF Self-Assessment'} />
+      <main style={{ flex: 1 }}>
+        {store.submitted
+          ? <GapReport store={store} onRestart={restart} />
+          : <StudentAssessment store={store} setStore={setStore} onSubmit={() => setSubmitted(true)} />}
+      </main>
+      <BrandFooter />
+    </React.Fragment>
+  );
+}
+
+function mount() {
+  if (!window.StudentAssessment || !window.GapReport || !window.InternshipInsightsCoDesignSystem_cd6ca8) { setTimeout(mount, 40); return; }
+  ReactDOM.createRoot(document.getElementById('app')).render(<App />);
+}
+mount();
+</script>
+</body>
+</html>
